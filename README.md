@@ -1,2 +1,2 @@
 # leetcode-clone
-Leetcode FE and BE 
+Leetcode FE
