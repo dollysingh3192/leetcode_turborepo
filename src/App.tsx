@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Problems, Landing } from "./pages";
+import { Problems, Landing, ProblemDetail } from "./pages";
 
 function App() {
   return (
@@ -8,6 +8,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/problems" element={<Problems />} />
+        <Route path="/problems/:id" element={<ProblemDetail/>} />
       </Routes>
     </BrowserRouter>
   );
