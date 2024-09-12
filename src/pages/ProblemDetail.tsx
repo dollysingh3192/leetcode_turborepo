@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_URL } from "../constants";
 
@@ -19,6 +19,8 @@ interface TestCase {
 const ProblemDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [problem, setProblem] = React.useState<Problem | null>(null);
+  // Create state to store textarea content
+  const [code, setCode] = useState("");
 
   useEffect(() => {
     axios.get(`${API_URL}/api/problem/${id}`).then(({ data }) => {
@@ -29,6 +31,21 @@ const ProblemDetail: React.FC = () => {
   if (!problem) {
     return <div>Loading...</div>;
   }
+
+  const handleSubmitCode = (id: string) => {
+    axios({
+      method: "post",
+      url: `${API_URL}/api/problem/submit/${id}`,
+      data: {
+        code
+      },
+    });
+  };
+
+  // Handle textarea value change
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCode(event.target.value);
+  };
 
   return (
     <div className="container mx-auto py-10 px-5">
@@ -64,8 +81,13 @@ const ProblemDetail: React.FC = () => {
           <textarea
             className="w-full h-64 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Write your code here..."
+            value={code} // Bind the textarea value to the state
+            onChange={handleChange} // Update state on every change
           ></textarea>
-          <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+          <button
+            className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            onClick={() => handleSubmitCode(problem.id)}
+          >
             Submit Code
           </button>
         </div>
