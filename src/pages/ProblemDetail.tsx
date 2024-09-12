@@ -8,6 +8,12 @@ interface Problem {
   title: string;
   difficulty: string;
   description_body: string;
+  testCases: TestCase[];
+}
+
+interface TestCase {
+  input: string;
+  output: string;
 }
 
 const ProblemDetail: React.FC = () => {
@@ -15,9 +21,9 @@ const ProblemDetail: React.FC = () => {
   const [problem, setProblem] = React.useState<Problem | null>(null);
 
   useEffect(() => {
-      axios.get(`${API_URL}/api/problem/${id}`).then(({ data }) => {
-        setProblem(data);
-      });
+    axios.get(`${API_URL}/api/problem/${id}`).then(({ data }) => {
+      setProblem(data);
+    });
   }, [id]);
 
   if (!problem) {
@@ -34,6 +40,22 @@ const ProblemDetail: React.FC = () => {
             Difficulty: {problem.difficulty}
           </p>
           <p className="text-gray-700">{problem.description_body}</p>
+          {/* Test Cases Section */}
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Test Cases</h2>
+            <ul className="space-y-4">
+              {problem.testCases.map((testCase, index) => (
+                <li key={index} className="bg-gray-100 rounded-lg p-4">
+                  <p className="text-sm text-gray-600">
+                    <span className="font-bold">Input:</span> {testCase.input}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <span className="font-bold">Output:</span> {testCase.output}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Right Part: Code Editor */}
