@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../constants';
 
-const SignIn: React.FC = () => {
+interface SignInProps {
+  onLogin: (username: string) => void;
+}
+
+const SignIn: React.FC<SignInProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -9,7 +14,7 @@ const SignIn: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/auth/signin', {
+      const response = await fetch(`${API_URL}/api/auth/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +25,8 @@ const SignIn: React.FC = () => {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem('token', data.token); // Store JWT token in localStorage
-        navigate('/'); // Redirect to homepage after successful login
+        onLogin(data?.user?.username); // Update the username in the Navbar component
+        navigate('/problems'); // Redirect to problems page after successful login
       } else {
         alert('Invalid credentials');
       }
