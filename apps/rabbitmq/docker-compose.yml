@@ -1,0 +1,17 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  # RabbitMQ broker port (default for AMQP)
+      - "15672:15672"  # RabbitMQ management UI port //http://localhost:15672 with below credentials
+    environment:
+      RABBITMQ_DEFAULT_USER: guest  # Default username
+      RABBITMQ_DEFAULT_PASS: guest  # Default password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq  # Persist data between restarts
+
+volumes:
+  rabbitmq_data:
+    driver: local
