@@ -11,19 +11,32 @@
     "start": "next start"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@repo/logger": "*",
     "next": "^14.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@repo/ui": "*"
+=======
+    "@repo/logger": "workspace:*",
+    "next": "^14.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@repo/ui": "workspace:*"
+>>>>>>> 09d64a1 (initial commite)
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.1",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.62",
     "@types/react-dom": "^18.2.19",
+<<<<<<< HEAD
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+=======
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+>>>>>>> 09d64a1 (initial commite)
     "typescript": "^5.3.3"
   }
 }

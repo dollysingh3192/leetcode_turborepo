@@ -3,7 +3,11 @@
   "scripts": {
     "build": "turbo run build",
     "clean": "turbo run clean",
+<<<<<<< HEAD
     "dev": "turbo run dev --concurrency 11",
+=======
+    "dev": "turbo run dev",
+>>>>>>> 09d64a1 (initial commite)
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "test": "turbo run test",
@@ -11,6 +15,7 @@
   },
   "devDependencies": {
     "prettier": "^3.2.5",
+<<<<<<< HEAD
     "turbo": "^2.1.2"
   },
   "engines": {
@@ -22,4 +27,13 @@
     "apps/*",
     "packages/*"
   ]
+=======
+    "turbo": "^2.0.5"
+  },
+  "packageManager": "pnpm@8.15.6",
+  "engines": {
+    "node": ">=18"
+  },
+  "name": "kitchen-sink"
+>>>>>>> 09d64a1 (initial commite)
 }

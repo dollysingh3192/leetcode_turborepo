@@ -12,14 +12,23 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "@repo/ui": "*"
+=======
+    "@repo/ui": "workspace:*"
+>>>>>>> 09d64a1 (initial commite)
   },
   "devDependencies": {
     "@types/react": "^18.2.62",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
+<<<<<<< HEAD
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+=======
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+>>>>>>> 09d64a1 (initial commite)
     "typescript": "^5.3.3",
     "vite": "^5.1.4"
   }

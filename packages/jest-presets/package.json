@@ -13,4 +13,8 @@
   "devDependencies": {
     "jest-environment-jsdom": "^29.7.0"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 09d64a1 (initial commite)
