@@ -16,6 +16,7 @@
     "nodemon": "^3.1.4"
   },
   "devDependencies": {
-    "@types/amqplib": "^0.10.5"
+    "@types/amqplib": "^0.10.5",
+    "@repo/prisma-schema": "*"
   }
 }
