@@ -4,7 +4,7 @@ import { secret } from "../constants";
 
 // Define the type for the JWT payload
 interface DecodedToken extends JwtPayload {
-    id?: string;
+    id: string;
     username?: string;
     email?: string;
     // Add other fields if needed
