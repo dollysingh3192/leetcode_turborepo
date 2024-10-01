@@ -2,7 +2,6 @@ import express, { json } from "express";
 import prisma from '../prisma';  // Import the Prisma singleton instance
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../types/types";
 import { secret } from "../constants";
 
 const auth = express.Router();
