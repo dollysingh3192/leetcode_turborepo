@@ -1,4 +1,5 @@
 const AMQPService = require('./rabbit-receiver');
+const prisma = require('./prisma');
 
 (async () => {  
     const amqpService = await AMQPService.getInstance();
@@ -16,5 +17,16 @@ const AMQPService = require('./rabbit-receiver');
 
         // Get the timestamp from the message
         const timestamp = data.timestamp;
+
+        prisma.submission.create({
+            data: {
+                code: codeSubmission,
+                language: 'JavaScript',
+                result: 'Pending',
+                userId: userId,
+                problemId: problemId,
+                createdAt: timestamp
+            }
+        });
     });
 })();  
