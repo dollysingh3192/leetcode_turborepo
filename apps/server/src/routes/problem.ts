@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import prisma from '../prisma';  // Import the Prisma singleton instance
 import AMQPService from "../rabbit-sender";
+import auth from "../middlewares/auth";
 
 const problem = express.Router();
 
@@ -32,7 +33,7 @@ problem.get("/:id", async (req, res) => {
     }
 });
 
-problem.post("/submit/:id", async (req, res) => {
+problem.post("/submit/:id", auth, async (req, res) => {
     try {
         const { id } = req.params; // Get problem ID from URL
         const { code } = req.body;  // Get submitted code from request body
@@ -47,7 +48,8 @@ problem.post("/submit/:id", async (req, res) => {
         const message = JSON.stringify({
           problemId: id,
           codeSubmission: code,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          userId: req.userId.id
         });
     
         // Get the singleton AMQP service instance and send the message to the queue
