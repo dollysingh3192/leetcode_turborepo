@@ -33,8 +33,12 @@ const ProblemDetail: React.FC = () => {
   }
 
   const handleSubmitCode = (id: string) => {
+    const token = localStorage.getItem("token");
     axios({
       method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       url: `${API_URL}/api/problem/submit/${id}`,
       data: {
         code
