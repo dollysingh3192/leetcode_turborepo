@@ -76,31 +76,48 @@ function equality(item1, item2) {
     return item1 === item2;
 }`;
 
+type RuntimeResult = {
+  status: string;
+  date: string;
+  runtime: number;
+  error_message: string;
+  test_case_number: string;
+  test_case: string;
+  expected_output: string;
+  user_output: string;
+};
+
+type RunCodeSuccess = {
+  stdout: RuntimeResult;
+  stdout_string: string;
+  stderr: string;
+  code_body: string;
+};
+
+type RunCodeFailure = {
+  stdout: any;
+  stdout_string: string;
+  stderr: string;
+  code_body: string;
+};
+
 // Function to run the code with a time limit
 const runCodeWithTimeout = (
   code: string,
   timeout: number,
   problem: Problem
-) => {
+) : Promise<RunCodeSuccess | RunCodeFailure> => {
   const { testCases, functionName, test } = problem;
 
   let data =
-    "(function x() { try {" +
-    code +
-    handleTestFunction +
-    `try { return (handleTests(${JSON.stringify(
-      testCases
-    )}, ${functionName})); } catch (e) { return (\`{ "status":"Runtime Error",
-        "date":"${new Date()}",
-        "runtime": 0,
-        "error_message": "\${e}",
-        "test_case_number" :"undefined",
-        "test_case":"undefined",
-        "expected_output":"undefined",
-        "user_output":"undefined"
-        }\`); }} catch (e) { return (\`{ "status":"Runtime Error",
-        "date":"${new Date()}",
-        "runtime": 0,
+    "(function x() { try {" + code + handleTestFunction +
+      `try { 
+          return (handleTests(${JSON.stringify(test)}, ${functionName})); } 
+      catch (e) { 
+        return (\`{ "status":"Runtime Error", "date":"${new Date()}","runtime": 0,"error_message": "\${e}",
+        "test_case_number" :"undefined","test_case":"undefined", "expected_output":"undefined","user_output":"undefined"
+        }\`); }} 
+     catch (e) { return (\`{ "status":"Runtime Error", "date":"${new Date()}", "runtime": 0,
         "error_message": "\${e}",
         "test_case_number" :"undefined",
         "test_case":"undefined",
@@ -108,12 +125,9 @@ const runCodeWithTimeout = (
         "user_output":"undefined"
         }\`); }})()`;
 
-  console.log("🚀 ~ runCodeWithTimeout ~ data:", data);
-
   return new Promise((resolve, reject) => {
     try {
         const stdout = eval(data);
-        console.log(stdout);
         resolve({
             stdout: JSON.parse(stdout),
             stdout_string: stdout,
@@ -160,7 +174,6 @@ const runCodeWithTimeout = (
         },
       },
     });
-    console.log("🚀 ~ awaitamqpService.consumeMessages ~ problem:", problem);
 
     const submission = await prisma.submission.create({
       data: {
@@ -187,18 +200,12 @@ const runCodeWithTimeout = (
       );
 
       // If successful, set result to 'Success'
-      result = "Success";
+      result = output.stdout.status;
 
       // Optionally, you can store the output if needed
       console.log("Execution Output:", output);
     } catch (error) {
-      if (error === "TLE") {
-        // Time Limit Exceeded
-        result = "TLE";
-      } else {
-        // Other errors (e.g., syntax errors)
-        result = `Error: ${error}`;
-      }
+      result = `Error: ${error}`;
     }
 
     // Update the submission record in the DB with the result
