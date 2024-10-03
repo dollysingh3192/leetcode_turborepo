@@ -29,6 +29,9 @@ model Problem {
   difficulty       String
   testCases        TestCase[]
   Submission       Submission[]
+  functionName     String
+  content          String
+  test             Json
 }
 
 model TestCase {
