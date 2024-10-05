@@ -3,17 +3,14 @@ import prisma from "@repo/prisma-schema";
 import { exec } from "child_process";
 
 interface TestCase {
-  id: string;
   input: string;
   output: string;
-  problemId: string;
 }
 
 interface Problem {
   id: string;
   title: string;
   difficulty: string;
-  statement: string;
   testCases: TestCase[];
   functionName: string;
   test: any;
@@ -174,6 +171,11 @@ const runCodeWithTimeout = (
         },
       },
     });
+
+    if (!problem) {
+      console.log("Problem not found");
+      return;
+    }
 
     const submission = await prisma.submission.create({
       data: {
