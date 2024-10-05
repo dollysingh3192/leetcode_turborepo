@@ -4,6 +4,7 @@
     "description": "",
     "main": "./dist/index.js",
     "types": "src/index.d.ts",
+    "module": "src/index.ts",
     "keywords": [],
     "author": "",
     "license": "UNLICENSED",
