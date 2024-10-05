@@ -1,5 +1,5 @@
 import express, { json } from "express";
-import prisma from '../prisma';  // Import the Prisma singleton instance
+import prisma from '@repo/prisma-schema';  // Import the Prisma singleton instance
 import AMQPService from "../rabbit-sender";
 import auth from "../middlewares/auth";
 

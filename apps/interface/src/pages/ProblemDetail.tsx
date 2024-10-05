@@ -9,6 +9,7 @@ interface Problem {
   difficulty: string;
   description_body: string;
   testCases: TestCase[];
+  content: string;
 }
 
 interface TestCase {
@@ -25,6 +26,7 @@ const ProblemDetail: React.FC = () => {
   useEffect(() => {
     axios.get(`${API_URL}/api/problem/${id}`).then(({ data }) => {
       setProblem(data);
+      setCode(data.content);
     });
   }, [id]);
 

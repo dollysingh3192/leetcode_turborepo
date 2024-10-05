@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import auth from "../middlewares/auth";
-import prisma from '../prisma';  // Import the Prisma singleton instance
+import prisma from '@repo/prisma-schema';  // Import the Prisma singleton instance
 
 const me = express.Router();
 
