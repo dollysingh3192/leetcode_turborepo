@@ -1,0 +1,18 @@
+rabbitmq:
+  auth:
+    username: myuser
+    password: mypassword
+    erlangCookie: 5e2cW7bCmoQEFGB1OojQjyTSqko8srW/pFmC0ofkXm4=
+  replicas: 1
+  service:
+    type: ClusterIP
+
+backend:
+  image: your-docker-repo/backend:latest
+  port: 3000
+
+worker:
+  image: your-docker-repo/worker:latest
+  port: 3001
+
+namespace: leetcode-clone
