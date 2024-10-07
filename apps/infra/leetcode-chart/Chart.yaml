@@ -1,0 +1,8 @@
+apiVersion: v2
+name: leetcode-chart
+description: A Helm chart for Leetcode Clone application
+version: 0.1.0
+dependencies:
+  - name: rabbitmq
+    version: 12.1.0       # Specify a compatible RabbitMQ chart version
+    repository: https://charts.bitnami.com/bitnami

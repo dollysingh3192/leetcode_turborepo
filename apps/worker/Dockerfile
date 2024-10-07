@@ -22,10 +22,10 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy the built backend application from the builder stage
-COPY --from=builder /app/apps/server/dist ./dist
+COPY --from=builder /app/apps/worker/dist ./dist
 
 # Copy node_modules to include local packages and dependencies
-COPY --from=builder /app/apps/server/node_modules ./node_modules
+COPY --from=builder /app/apps/worker/node_modules ./node_modules
 
 EXPOSE 3000
 
