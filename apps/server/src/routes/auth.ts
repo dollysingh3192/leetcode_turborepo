@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express from "express";
 import prisma from '@repo/prisma-schema';  // Import the Prisma singleton instance
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
