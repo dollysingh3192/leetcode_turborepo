@@ -5,22 +5,24 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node ./dist/src/server.js",
+    "start": "npm run build && node ./dist/server.js",
+    "prod": "node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.19.1",
+    "@repo/prisma-schema": "*",
     "amqplib": "^0.10.4",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "@repo/prisma-schema": "*"
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.5",
@@ -32,6 +34,7 @@
     "nodemon": "^3.1.4",
     "prisma": "^5.19.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "tsup": "^8.3.0"
   }
 }

@@ -34,7 +34,7 @@ class AMQPService {
   public async consumeMessages(onMessage: (msg: ConsumeMessage) => void): Promise<void> {
     if (this.channel) {
       console.log(`Waiting for messages in queue: ${QUEUE_NAME}`);
-      await this.channel.consume(QUEUE_NAME, (msg) => {
+      await this.channel.consume(QUEUE_NAME, (msg: any) => {
         if (msg) {
           onMessage(msg);
           this.channel?.ack(msg); // Acknowledge that the message was processed
