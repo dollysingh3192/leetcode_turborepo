@@ -20,7 +20,7 @@ worker:
   port: 3001
 
 database:
-  username: root
+  username: dev
   password: password
 
 namespace: leetcode-clone
