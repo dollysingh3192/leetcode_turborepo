@@ -1,0 +1,26 @@
+
+rabbitmq:
+  fullnameOverride: "rabbitmq"
+  namespaceOverride: leetcode-clone
+  auth:
+    username: myuser
+    password: mypassword
+    #openssl rand -base64 32
+    erlangCookie: 5e2cW7bCmoQEFGB1OojQjyTSqko8srW/pFmC0ofkXm4=
+  replicas: 1
+  service:
+    type: ClusterIP
+
+backend:
+  image: dollysingh3192/leetcode-server:v1
+  port: 3000
+
+worker:
+  image: dollysingh3192/leetcode-worker:v1
+  port: 3001
+
+database:
+  username: dev
+  password: password
+
+namespace: leetcode-clone
