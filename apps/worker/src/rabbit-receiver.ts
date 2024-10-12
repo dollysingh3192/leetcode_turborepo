@@ -1,4 +1,5 @@
 import amqplib, { Connection, Channel, ConsumeMessage } from 'amqplib';
+import { rabbitmqUrl } from './constants';
 
 const QUEUE_NAME = 'judge';
 
@@ -21,7 +22,7 @@ class AMQPService {
   // Initialize the connection and channel
   private async initialize(): Promise<void> {
     try {
-      this.connection = await amqplib.connect('amqp://localhost');
+      this.connection = await amqplib.connect(rabbitmqUrl);
       this.channel = await this.connection.createChannel();
       await this.channel.assertQueue(QUEUE_NAME, { durable: true });
     } catch (error) {
