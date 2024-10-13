@@ -1,22 +1,34 @@
 ```
-In this repository, we have two services: server and worker. The server is responsible for handling requests from the client and interacting with the database. The worker is responsible for processing the code submissions and updating the database accordingly. Both services are implemented using Node.js and TypeScript.
+# LeetCode Clone Application
 
-It also has interface app in interface folder which is responsible for rendering the UI and handling user interactions.
-A minimal setup that has /problems route and /problems/:id route where we can submit code.
+This repository contains two core services:
 
-When code is submitted, it is sent to the worker service which will process it and update the database. With Accepted/Rejected status.
+- **Server**: Handles client requests and interacts with the database.
+- **Worker**: Processes code submissions and updates the database with `Accepted/Rejected` status.
 
-I have created a common package for the server and worker services. This is prism schema which is used for connecting to the database.
+Both services are built using **Node.js** and **TypeScript**.
 
-I have created a helm chart for deploying the application to kubernetes.
-In this i have added rabbitmq as a dependency and created a rabbitmq service and a rabbitmq replicaset.
-I have also created a backend service and a backend replicaset.
-I have created a worker service replicaset. (Need to wait for rabbitmq to be ready)
+### Interface App
+Located in the `interface` folder, this app is responsible for rendering the UI and handling user interactions. It includes:
+- `/problems` route: Displays a list of problems.
+- `/problems/:id` route: Allows code submission for specific problems.
 
-Upcoming Changes:
-KEDA setup for scaling the worker replicaset as per rabbitmq queue size.
-Prometheus setup for monitoring the application.
+When code is submitted, it is sent to the worker service for processing. The worker updates the database based on the results.
 
+### Common Package
+A shared package between the server and worker services, containing the **Prisma schema** for database connectivity.
+
+### Kubernetes Deployment with Helm
+We have set up a Helm chart to deploy the application in a Kubernetes cluster. This chart includes:
+- **RabbitMQ** as a dependency, with its own service and replicaset.
+- **Backend service** with a corresponding replicaset.
+- **Worker service** replicaset (which waits for RabbitMQ to be ready).
+
+### Upcoming Features
+- **KEDA**: To enable scaling of the worker replicaset based on the size of the RabbitMQ queue.
+- **Prometheus**: For monitoring the application.
+
+## Getting Started
 
 Clone the repository
 Install dependencies  => `npm install`
