@@ -34,6 +34,8 @@ Do the build => `npm run build`
 Run the server => `npm run dev`
 
 ```
+Note: In my application all resources are deployed in a namespace called leetcode-clone
+
 Docker Commands
 
 docker tag leetcode/worker:latest dollysingh3192/leetcode-worker:v1
@@ -56,8 +58,13 @@ kubectl logs <backend-pod-name> --namespace leetcode-clone
 List env in pods
 printenv
 
+
 Port forwarding to backend service
 kubectl port-forward svc/backend-service 3000:3000 --namespace leetcode-clone
+
+Port forwarding to rabbitmq service
+kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode-clone
+then simply access rabbitmq management console at http://localhost:15672
 
 HELM Commands
 
