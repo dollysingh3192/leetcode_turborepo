@@ -33,7 +33,11 @@ Clone the repository
 - Do the build => `npm run build`
 - Run the server => `npm run dev`
 
-```
+## LeetCode Clone: Deployment and Management Commands
+
+> **Note**: All resources are deployed in a namespace called `leetcode-clone`.
+
+```bash
 Note: In my application all resources are deployed in a namespace called leetcode-clone
 
 Docker Commands
