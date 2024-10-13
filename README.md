@@ -38,7 +38,7 @@ Clone the repository
 > **Note**: All resources are deployed in a namespace called `leetcode-clone`.
 
 ```bash
-Note: In my application all resources are deployed in a namespace called leetcode-clone
+Note: In this application all resources are deployed in a namespace called leetcode-clone
 
 Docker Commands
 
