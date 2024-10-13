@@ -29,9 +29,9 @@ We have set up a Helm chart to deploy the application in a Kubernetes cluster. T
 
 ## Getting Started
 Clone the repository
-Install dependencies  => `npm install`
-Do the build => `npm run build`
-Run the server => `npm run dev`
+- Install dependencies  => `npm install`
+- Do the build => `npm run build`
+- Run the server => `npm run dev`
 
 ```
 Note: In my application all resources are deployed in a namespace called leetcode-clone
@@ -45,6 +45,7 @@ docker run -it --entrypoint /bin/sh dollysingh3192/leetcode-worker:v1
 docker run --name my-backend-container -p 3000:3000 my-backend-app
 docker run --name my-backend-container -d --rm -p 3000:3000 my-backend-app
 docker ps
+docker stop <id of the container>
 
 Kubernetes Commands
 kubectl create namespace leetcode-clone
@@ -57,7 +58,6 @@ kubectl logs <backend-pod-name> --namespace leetcode-clone
 
 List env in pods
 printenv
-
 
 Port forwarding to backend service
 kubectl port-forward svc/backend-service 3000:3000 --namespace leetcode-clone
@@ -89,7 +89,9 @@ docker build -f apps/server/Dockerfile -t your-image-name .
 List image content
 docker run -it --entrypoint /bin/sh IMAGE_NAME
 
+//Inside the cluster the hostname is rabbitmq.leetcode-clone.svc.cluster.local these settings are overridden in the helm chart using the fullnameOverride and namespaceOverride values respectively.
 amqp://myuser:mypassword@rabbitmq.leetcode-clone.svc.cluster.local:5672
+                        @<service-name>.<namespace>.svc.cluster.local:<port>
 
 minikube start
 minikube stop
