@@ -13,6 +13,10 @@ In this i have added rabbitmq as a dependency and created a rabbitmq service and
 I have also created a backend service and a backend replicaset.
 I have created a worker service replicaset. (Need to wait for rabbitmq to be ready)
 
+Upcoming Changes:
+KEDA setup for scaling the worker replicaset as per rabbitmq queue size.
+Prometheus setup for monitoring the application.
+
 
 Clone the repository
 Install dependencies  => `npm install`
