@@ -13,6 +13,11 @@ spec:
       labels:
         app: worker
     spec:
+      initContainers:
+        - name: wait-for-rabbitmq
+          image: busybox  # Minimal image to perform the wait task
+          command: ['sh', '-c', 'until nc -z {{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local 5672; do echo waiting for rabbitmq; sleep 5; done;']
+          # The `nc -z` command checks if RabbitMQ is accepting connections on port 5672. The container sleeps and retries until RabbitMQ is available.
       containers:
         - name: worker
           image: {{ .Values.worker.image }}  # Update with your image
