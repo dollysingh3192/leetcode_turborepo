@@ -39,6 +39,7 @@ helm install leetcode leetcode-chart (first time)
 helm upgrade leetcode leetcode-chart (updates)
 //inside chart folder
 helm install leetcode . --values ./values.yaml
+helm install leetcode . --values ./values-prod.yaml
 helm list
 helm upgrade leetcode1 leetcode-chart --namespace leetcode-clone --debug --dry-run (shows error when trying to upgrade)
 helm history leetcode
