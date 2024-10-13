@@ -1,4 +1,19 @@
 ```
+In this repository, we have two services: server and worker. The server is responsible for handling requests from the client and interacting with the database. The worker is responsible for processing the code submissions and updating the database accordingly. Both services are implemented using Node.js and TypeScript.
+
+It also has interface app in interface folder which is responsible for rendering the UI and handling user interactions.
+A minimal setup that has /problems route and /problems/:id route where we can submit code.
+
+When code is submitted, it is sent to the worker service which will process it and update the database. With Accepted/Rejected status.
+
+I have created a common package for the server and worker services. This is prism schema which is used for connecting to the database.
+
+I have created a helm chart for deploying the application to kubernetes.
+In this i have added rabbitmq as a dependency and created a rabbitmq service and a rabbitmq replicaset.
+I have also created a backend service and a backend replicaset.
+I have created a worker service replicaset. (Need to wait for rabbitmq to be ready)
+
+
 Clone the repository
 Install dependencies  => `npm install`
 Do the build => `npm run build`
