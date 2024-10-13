@@ -98,4 +98,11 @@ minikube stop
 docker container prune
 docker image rm leetcode/worker
 
+
+Helpful github links
+https://github.com/dollysingh3192/docker-development-youtube-series
+
+FOR KEDA:  https://github.com/kedacore/sample-go-rabbitmq/tree/main
+
+
 ```
