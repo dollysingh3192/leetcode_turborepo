@@ -1,4 +1,3 @@
-```
 # LeetCode Clone Application
 
 This repository contains two core services:
@@ -29,12 +28,12 @@ We have set up a Helm chart to deploy the application in a Kubernetes cluster. T
 - **Prometheus**: For monitoring the application.
 
 ## Getting Started
-
 Clone the repository
 Install dependencies  => `npm install`
 Do the build => `npm run build`
 Run the server => `npm run dev`
 
+```
 Docker Commands
 
 docker tag leetcode/worker:latest dollysingh3192/leetcode-worker:v1
@@ -57,9 +56,8 @@ kubectl logs <backend-pod-name> --namespace leetcode-clone
 List env in pods
 printenv
 
-Port forwarding
+Port forwarding to backend service
 kubectl port-forward svc/backend-service 3000:3000 --namespace leetcode-clone
-
 
 HELM Commands
 
@@ -78,18 +76,13 @@ helm uninstall leetcode
 helm status leetcode
 
 
-
-
 Run below command from root of repository
 docker build -f apps/server/Dockerfile -t your-image-name .
 
 List image content
 docker run -it --entrypoint /bin/sh IMAGE_NAME
 
-
 amqp://myuser:mypassword@rabbitmq.leetcode-clone.svc.cluster.local:5672
-amqp://myuser:mypassword@rabbitmq.leetcode-clone.svc.cluster.local:5672
-
 
 minikube start
 minikube stop
