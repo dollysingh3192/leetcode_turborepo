@@ -24,3 +24,5 @@ database:
   password: password
 
 namespace: leetcode-clone
+
+ignoreFiles: false # Change this to true to create templates 
