@@ -110,3 +110,34 @@ FOR KEDA:  https://github.com/kedacore/sample-go-rabbitmq/tree/main
 
 
 ```
+
+
+```bash
+           +----------------------+
+           | External Metrics      |
+           | (RabbitMQ queue size) |
+           +----------------------+
+                    ↑
+                    | KEDA monitors
+                    ↓
+           +----------------------+
+           |       KEDA             |
+           | Creates HPA Resource   |
+           +----------------------+
+                    ↑
+                    | Sends scaling triggers
+                    ↓
+           +----------------------+
+           |       HPA              |
+           |  Adjusts replicas in   |
+           |  Worker Deployment     |
+           +----------------------+
+                    ↑
+                    | Modifies replica count
+                    ↓
+           +----------------------+
+           |   Worker Deployment   |
+           | Runs worker pods      |
+           +----------------------+
+
+```

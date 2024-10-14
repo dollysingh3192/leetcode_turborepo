@@ -1,14 +1,10 @@
-#The ReplicaSet you've defined will not automatically scale because a ReplicaSet does not natively support autoscaling like a 
-#Deployment. KEDA (via HPA) typically works with Deployments, not ReplicaSets
-
-{{ if .Values.ignoreFiles }}
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment  # Change ReplicaSet to Deployment
 metadata:
-  name: worker-rs
+  name: worker-deployment
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: 1  # This is the initial replica count; KEDA will adjust this
   selector:
     matchLabels:
       app: worker
@@ -19,12 +15,11 @@ spec:
     spec:
       initContainers:
         - name: wait-for-rabbitmq
-          image: busybox  # Minimal image to perform the wait task
+          image: busybox
           command: ['sh', '-c', 'until nc -z {{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local 5672; do echo waiting for rabbitmq; sleep 5; done;']
-          # The `nc -z` command checks if RabbitMQ is accepting connections on port 5672. The container sleeps and retries until RabbitMQ is available.
       containers:
         - name: worker
-          image: {{ .Values.worker.image }}  # Update with your image
+          image: {{ .Values.worker.image }}
           ports:
             - containerPort: {{ .Values.worker.port }}
           env:
@@ -32,5 +27,3 @@ spec:
               value: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
             - name: DATABASE_URL
               value: "mongodb+srv://{{ .Values.database.username }}:{{ .Values.database.password }}@cluster0.vfrom.mongodb.net/leetcode"
-{{ end }}
-

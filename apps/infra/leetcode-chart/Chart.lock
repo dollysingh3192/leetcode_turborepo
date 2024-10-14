@@ -2,5 +2,8 @@ dependencies:
 - name: rabbitmq
   repository: https://charts.bitnami.com/bitnami
   version: 12.1.0
-digest: sha256:93109045c3699363d0d105d38abf9b95814657e6d11e62a613d02b4503bc929b
-generated: "2024-10-09T22:25:15.089219+05:30"
+- name: keda
+  repository: https://kedacore.github.io/charts
+  version: 2.10.0
+digest: sha256:a400095f623f89fbc1e45d69397a1799e9c223bc126bff5bd0391d13eac7363d
+generated: "2024-10-13T15:20:55.660788+05:30"
