@@ -7,5 +7,5 @@ dependencies:
     version: 12.1.0       # Specify a compatible RabbitMQ chart version
     repository: https://charts.bitnami.com/bitnami
   - name: keda
-    version: 2.10.0      # Specify the KEDA chart version you want to use
+    version: 2.0.0      # Specify the KEDA chart version you want to use
     repository: https://kedacore.github.io/charts

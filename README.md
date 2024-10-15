@@ -52,7 +52,9 @@ docker ps
 docker stop <id of the container>
 
 Kubernetes Commands
+kubectl get namespaces
 kubectl create namespace leetcode-clone
+kubectl delete namespace leetcode-clone
 kubectl get pods
 kubectl get all
 kubectl get pods,svc -n leetcode-clone
