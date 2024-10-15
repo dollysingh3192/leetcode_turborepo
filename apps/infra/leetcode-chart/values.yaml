@@ -1,7 +1,7 @@
 
 rabbitmq:
   fullnameOverride: "rabbitmq"
-  namespaceOverride: leetcode-clone
+  namespaceOverride: leetcode
   auth:
     username: myuser
     password: mypassword
@@ -23,6 +23,6 @@ database:
   username: root
   password: password
 
-namespace: leetcode-clone
+namespace: leetcode
 
 ignoreFiles: false # Change this to true to create templates 

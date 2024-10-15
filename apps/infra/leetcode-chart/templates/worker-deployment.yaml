@@ -27,3 +27,42 @@ spec:
               value: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
             - name: DATABASE_URL
               value: "mongodb+srv://{{ .Values.database.username }}:{{ .Values.database.password }}@cluster0.vfrom.mongodb.net/leetcode"
+--- 
+# apiVersion: keda.k8s.io/v1alpha1
+# kind: ScaledObject
+# metadata:
+#   name: worker-scaledobject
+#   namespace: {{ .Values.namespace }}
+# spec:
+#   scaleTargetRef:
+#     deploymentName: worker-deployment
+#     namespace: {{ .Values.namespace }}
+#   cooldownPeriod: 300
+#   minReplicaCount: 1
+#   maxReplicaCount: 10
+#   tiggers:
+#     - type: rabbitmq
+#       metadata:
+#         queueName: "judge"  # Your RabbitMQ queue
+#         host: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
+#         queueLength: "5"
+
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: worker-scaledobject
+  namespace: {{ .Values.namespace }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: worker-deployment  # Name of your worker deployment
+  minReplicaCount: 1      # Minimum number of worker pods
+  maxReplicaCount: 10     # Maximum number of worker pods
+  cooldownPeriod:  300    # Cooldown period before scaling down
+  triggers:
+    - type: rabbitmq
+      metadata:
+        queueName: "judge"  # Your RabbitMQ queue
+        host: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
+        queueLength: "5"  # Number of messages in the queue to trigger scaling
