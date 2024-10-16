@@ -35,10 +35,10 @@ Clone the repository
 
 ## LeetCode Clone: Deployment and Management Commands
 
-> **Note**: All resources are deployed in a namespace called `leetcode-clone`.
+> **Note**: All resources are deployed in a namespace called `leetcode`.
 
 ```bash
-Note: In this application all resources are deployed in a namespace called leetcode-clone
+Note: In this application all resources are deployed in a namespace called leetcode
 
 Docker Commands
 
@@ -53,23 +53,23 @@ docker stop <id of the container>
 
 Kubernetes Commands
 kubectl get namespaces
-kubectl create namespace leetcode-clone
-kubectl delete namespace leetcode-clone
+kubectl create namespace leetcode
+kubectl delete namespace leetcode
 kubectl get pods
 kubectl get all
-kubectl get pods,svc -n leetcode-clone
+kubectl get pods,svc -n leetcode
 
 Check the logs of the backend pod
-kubectl logs <backend-pod-name> --namespace leetcode-clone
+kubectl logs <backend-pod-name> --namespace leetcode
 
 List env in pods
 printenv
 
 Port forwarding to backend service
-kubectl port-forward svc/backend-service 3000:3000 --namespace leetcode-clone
+kubectl port-forward svc/backend-service 3000:3000 --namespace leetcode
 
 Port forwarding to rabbitmq service
-kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode-clone
+kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
 then simply access rabbitmq management console at http://localhost:15672
 
 HELM Commands
@@ -83,7 +83,7 @@ helm upgrade leetcode leetcode-chart (updates)
 helm install leetcode . --values ./values.yaml
 helm install leetcode . --values ./values-prod.yaml
 helm list
-helm upgrade leetcode1 leetcode-chart --namespace leetcode-clone --debug --dry-run (shows error when trying to upgrade)
+helm upgrade leetcode1 leetcode-chart --namespace leetcode --debug --dry-run (shows error when trying to upgrade)
 helm history leetcode
 helm uninstall leetcode
 helm status leetcode
@@ -95,8 +95,8 @@ docker build -f apps/server/Dockerfile -t your-image-name .
 List image content
 docker run -it --entrypoint /bin/sh IMAGE_NAME
 
-//Inside the cluster the hostname is rabbitmq.leetcode-clone.svc.cluster.local these settings are overridden in the helm chart using the fullnameOverride and namespaceOverride values respectively.
-amqp://myuser:mypassword@rabbitmq.leetcode-clone.svc.cluster.local:5672
+//Inside the cluster the hostname is rabbitmq.leetcode.svc.cluster.local these settings are overridden in the helm chart using the fullnameOverride and namespaceOverride values respectively.
+amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672
                         @<service-name>.<namespace>.svc.cluster.local:<port>
 
 minikube start
