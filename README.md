@@ -105,6 +105,16 @@ docker container prune
 docker image rm leetcode/worker
 
 
+From within the RabbitMQ pod shell, run:
+rabbitmqctl list_queues
+rabbitmqctl list_connections
+rabbitmq-plugins list
+rabbitmq-plugins enable rabbitmq_management
+kubectl port-forward svc/<rabbitmq-service-name> 15672:15672 -n <namespace>
+http://localhost:15672
+
+
+
 Helpful github links
 https://github.com/dollysingh3192/docker-development-youtube-series
 

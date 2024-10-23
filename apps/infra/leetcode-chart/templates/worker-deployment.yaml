@@ -27,7 +27,7 @@ spec:
               value: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
             - name: DATABASE_URL
               value: "mongodb+srv://{{ .Values.database.username }}:{{ .Values.database.password }}@cluster0.vfrom.mongodb.net/leetcode"
---- 
+# --- 
 # apiVersion: keda.k8s.io/v1alpha1
 # kind: ScaledObject
 # metadata:
@@ -46,12 +46,20 @@ spec:
 #         queueName: "judge"  # Your RabbitMQ queue
 #         host: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
 #         queueLength: "5"
-
+---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: worker-scaledobject
   namespace: {{ .Values.namespace }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+  # labels:
+  #   app.kubernetes.io/managed-by: "Helm"
+  # annotations:
+  #   meta.helm.sh/release-name:  {{ .Values.releasename }}
+  #   meta.helm.sh/release-namespace: "default"
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -63,6 +71,8 @@ spec:
   triggers:
     - type: rabbitmq
       metadata:
+        protocol: amqp
+        mode: QueueLength
         queueName: "judge"  # Your RabbitMQ queue
         host: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
-        queueLength: "5"  # Number of messages in the queue to trigger scaling
+        value: "5"  # Number of messages in the queue to trigger scaling
