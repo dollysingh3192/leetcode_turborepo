@@ -1,0 +1,72 @@
+{
+    "apiVersion": "keda.sh/v1alpha1",
+    "kind": "ScaledObject",
+    "metadata": {
+        "annotations": {
+            "helm.sh/hook": "post-install",
+            "helm.sh/hook-weight": "1"
+        },
+        "creationTimestamp": "2024-10-21T16:42:27Z",
+        "deletionGracePeriodSeconds": 0,
+        "deletionTimestamp": "2024-10-21T16:43:21Z",
+        "finalizers": [
+            "finalizer.keda.sh"
+        ],
+        "generation": 2,
+        "labels": {
+            "scaledobject.keda.sh/name": "worker-scaledobject"
+        },
+        "name": "worker-scaledobject",
+        "namespace": "leetcode",
+        "resourceVersion": "44508",
+        "uid": "187ad134-0b1b-4efd-847b-80e8254dafc0"
+    },
+    "spec": {
+        "cooldownPeriod": 300,
+        "maxReplicaCount": 10,
+        "minReplicaCount": 1,
+        "scaleTargetRef": {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "worker-deployment"
+        },
+        "triggers": [
+            {
+                "metadata": {
+                    "host": "amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672",
+                    "queueLength": "5",
+                    "queueName": "judge"
+                },
+                "type": "rabbitmq"
+            }
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "message": "Failed to ensure HPA is correctly created for ScaledObject",
+                "reason": "ScaledObjectCheckFailed",
+                "status": "False",
+                "type": "Ready"
+            },
+            {
+                "message": "ScaledObject check failed",
+                "reason": "UnkownState",
+                "status": "Unknown",
+                "type": "Active"
+            },
+            {
+                "status": "Unknown",
+                "type": "Fallback"
+            }
+        ],
+        "originalReplicaCount": 1,
+        "scaleTargetGVKR": {
+            "group": "apps",
+            "kind": "Deployment",
+            "resource": "deployments",
+            "version": "v1"
+        },
+        "scaleTargetKind": "apps/v1.Deployment"
+    }
+}
