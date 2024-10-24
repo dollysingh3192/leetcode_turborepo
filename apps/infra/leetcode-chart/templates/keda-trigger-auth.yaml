@@ -1,0 +1,13 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-rabbitmq-conn
+  namespace: {{ .Values.namespace }}  # Adjust if needed
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+spec:
+  secretTargetRef:
+    - parameter: host
+      name: keda-rabbitmq-secret  # Reference to the secret holding RabbitMQ credentials
+      key: host  # The key inside the secret containing the RabbitMQ connection string
