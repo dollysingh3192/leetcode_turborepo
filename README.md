@@ -117,6 +117,17 @@ http://localhost:15672
 "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
 "amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672"
 
+kubectl patch scaledobject.keda.sh worker-scaledobject -n leetcode --type merge -p '{"metadata":{"finalizers":[]}}'
+kubectl patch triggerauthentication.keda.sh keda-trigger-auth-rabbitmq-conn -n leetcode --type merge -p '{"metadata":{"finalizers":[]}}'
+kubectl get triggerauthentication.keda.sh -n leetcode
+kubectl logs deployment/keda-operator -n keda
+kubectl get scaledobjects -n leetcode
+kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
+kubectl get hpa -n leetcode
+kubectl get deployments -n leetcode
+kubectl get pods -n leetcode
+
+echo -n "amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672" | base64
 
 Helpful github links
 https://github.com/dollysingh3192/docker-development-youtube-series
