@@ -1,0 +1,25 @@
+# apiVersion: batch/v1
+# kind: Job
+# metadata:
+#   name: cleanup-resources
+#   namespace: {{ .Values.namespace }}
+#   annotations:
+#     "helm.sh/hook": pre-delete
+#     "helm.sh/hook-delete-policy": before-hook-creation
+# spec:
+#   template:
+#     spec:
+#       containers:
+#       - name: cleanup
+#         image: bitnami/kubectl:latest
+#         command:
+#         - /bin/sh
+#         - -c
+#         - |
+#           echo "Removing stuck resources"
+#           # Patch the ScaledObject to remove finalizers if present
+#           kubectl patch scaledobject.keda.sh worker-scaledobject -n {{ .Values.namespace }} --type merge -p '{"metadata":{"finalizers":[]}}'
+#           # Patch the TriggerAuthentication to remove finalizers if present
+#           kubectl patch triggerauthentication.keda.sh keda-trigger-auth-rabbitmq-conn -n {{ .Values.namespace }} --type merge -p '{"metadata":{"finalizers":[]}}'
+#       restartPolicy: Never
+#   backoffLimit: 1

@@ -111,8 +111,11 @@ rabbitmqctl list_connections
 rabbitmq-plugins list
 rabbitmq-plugins enable rabbitmq_management
 kubectl port-forward svc/<rabbitmq-service-name> 15672:15672 -n <namespace>
+kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
 http://localhost:15672
 
+"amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
+"amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672"
 
 
 Helpful github links
