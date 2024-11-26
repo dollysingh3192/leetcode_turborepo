@@ -3,6 +3,9 @@ kind: Deployment  # Change ReplicaSet to Deployment
 metadata:
   name: worker-deployment
   namespace: {{ .Values.namespace }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "2"
 spec:
   replicas: 1  # This is the initial replica count; KEDA will adjust this
   selector:
@@ -30,34 +33,3 @@ spec:
                   key: host
             - name: DATABASE_URL
               value: "mongodb+srv://{{ .Values.database.username }}:{{ .Values.database.password }}@cluster0.vfrom.mongodb.net/leetcode"
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: worker-scaledobject
-  namespace: {{ .Values.namespace }}
-  annotations:
-    "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "2"
-  # labels:
-  #   app.kubernetes.io/managed-by: "Helm"
-  # annotations:
-  #   meta.helm.sh/release-name:  {{ .Values.releasename }}
-  #   meta.helm.sh/release-namespace: "default"
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: worker-deployment  # Name of your worker deployment
-  minReplicaCount: 1      # Minimum number of worker pods
-  maxReplicaCount: 10     # Maximum number of worker pods
-  cooldownPeriod:  300    # Cooldown period before scaling down
-  triggers:
-    - type: rabbitmq
-      metadata:
-        protocol: amqp
-        mode: QueueLength
-        queueName: "judge"  # Your RabbitMQ queue
-        value: "5"  # Number of messages in the queue to trigger scaling
-      authenticationRef:
-        name: keda-trigger-auth-rabbitmq-conn
