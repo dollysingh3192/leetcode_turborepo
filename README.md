@@ -135,6 +135,12 @@ https://github.com/dollysingh3192/docker-development-youtube-series
 FOR KEDA:  https://github.com/kedacore/sample-go-rabbitmq/tree/main
 
 
+install keda
+install rabbitmq
+then deployment
+then scaledobject
+
+
 ```
 
 
