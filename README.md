@@ -130,16 +130,21 @@ kubectl get pods -n leetcode
 echo -n "amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672" | base64
 
 Helpful github links
-https://github.com/dollysingh3192/docker-development-youtube-series
+* https://github.com/dollysingh3192/docker-development-youtube-series
 
-FOR KEDA:  https://github.com/kedacore/sample-go-rabbitmq/tree/main
+Learning's of leetcode system design reference:
+* https://www.hellointerview.com/learn/system-design/problem-breakdowns/leetcode
+
+FOR KEDA:  
+ * https://github.com/kedacore/sample-go-rabbitmq/tree/main
+ * https://maddevs.io/writeups/keda-based-rabbitmq-custom-metric-for-hpa/
+ * https://medium.com/cuddle-ai/auto-scaling-microservices-with-kubernetes-event-driven-autoscaler-keda-8db6c301b18
 
 
 install keda
 install rabbitmq
 then deployment
 then scaledobject
-
 
 ```
 
@@ -172,4 +177,9 @@ then scaledobject
            | Runs worker pods      |
            +----------------------+
 
+```
+
+Packet to test the keda in the rabbitmq pod up by helm 
+```js
+{"problemId":"670b690d3559b9c9c353bdf9","code":"function twoSum(nums, target) {const map = new Map();\n    \n    for(let i = 0; i < nums.length; i++) {\n        let n = nums[i];\n        let diff = target - n;\n        \n        if(map.has(diff)) {\n            return [map.get(diff), i];\n        } else {\n            map.set(n, i);\n        }\n        \n    }}","timestamp":"2024-11-29T09:49:38.954Z","userId":"670b69df1d799b0575866ebc"}
 ```
