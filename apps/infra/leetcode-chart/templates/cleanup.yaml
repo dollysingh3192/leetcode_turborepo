@@ -1,25 +1,57 @@
 # apiVersion: batch/v1
 # kind: Job
 # metadata:
-#   name: cleanup-resources
+#   name: cleanup-keda-resources
 #   namespace: {{ .Values.namespace }}
 #   annotations:
 #     "helm.sh/hook": pre-delete
-#     "helm.sh/hook-delete-policy": before-hook-creation
 # spec:
 #   template:
 #     spec:
 #       containers:
 #       - name: cleanup
-#         image: bitnami/kubectl:latest
+#         image: bitnami/kubectl:latest # Or any image with `kubectl`
 #         command:
 #         - /bin/sh
 #         - -c
 #         - |
-#           echo "Removing stuck resources"
-#           # Patch the ScaledObject to remove finalizers if present
-#           kubectl patch scaledobject.keda.sh worker-scaledobject -n {{ .Values.namespace }} --type merge -p '{"metadata":{"finalizers":[]}}'
-#           # Patch the TriggerAuthentication to remove finalizers if present
-#           kubectl patch triggerauthentication.keda.sh keda-trigger-auth-rabbitmq-conn -n {{ .Values.namespace }} --type merge -p '{"metadata":{"finalizers":[]}}'
-#       restartPolicy: Never
-#   backoffLimit: 1
+#           echo "Deleting ScaledObjects and ScaledJobs..."
+#           kubectl delete $(kubectl get scaledobjects.keda.sh,scaledjobs.keda.sh -A \
+#             -o jsonpath='{"-n "}{.items[*].metadata.namespace}{" "}{.items[*].kind}{"/"}{.items[*].metadata.name}{"\n"}') || true
+#         # Add retry logic or sleep if needed
+#       restartPolicy: OnFailure
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: cleanup-keda-resources
+#   namespace: {{ .Values.namespace }}
+#   labels:
+#     app: cleanup-keda-resources
+#   annotations:
+#     "helm.sh/hook": pre-delete
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: cleanup-keda-resources
+#   template:
+#     metadata:
+#       labels:
+#         app: cleanup-keda-resources
+#     spec:
+#       containers:
+#       - name: cleanup
+#         image: bitnami/kubectl:latest # Or any image with `kubectl`
+#         command:
+#         - /bin/sh
+#         - -c
+#         - |
+#           echo "Deleting ScaledObjects and ScaledJobs..."
+#           while true; do
+#             kubectl delete $(kubectl get scaledobjects.keda.sh,scaledjobs.keda.sh -A \
+#               -o jsonpath='{"-n "}{.items[*].metadata.namespace}{" "}{.items[*].kind}{"/"}{.items[*].metadata.name}{"\n"}') || true
+#             echo "Cleanup job completed. Sleeping for 5 minutes before retrying..."
+#             sleep 300
+#           done
+#       restartPolicy: Always
