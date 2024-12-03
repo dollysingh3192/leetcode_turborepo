@@ -143,6 +143,29 @@ then scaledobject
 
 ```
 
+```
+https://keda.sh/docs/2.10/deploy/#uninstall
+
+To install infra:
+helm install my-app . --values values-prod.yaml -n keda
+
+To Uninstall infra:
+kubectl delete $(kubectl get scaledobjects.keda.sh,scaledjobs.keda.sh -A \
+  -o jsonpath='{"-n "}{.items[*].metadata.namespace}{" "}{.items[*].kind}{"/"}{.items[*].metadata.name}{"\n"}')
+helm uninstall my-app -n keda 
+
+
+also
+helm install my-app . --values values-prod.yaml -n keda
+helm uninstall my-app -n keda --cascade=foreground
+
+NOTE:
+Deletion will wait until all child resources are completely removed before the parent resource is deleted.
+This process may take longer compared to default deletion.
+It ensures a clean and predictable deletion order based on Kubernetes' ownership hierarchy.
+
+```
+
 
 ```bash
            +----------------------+
