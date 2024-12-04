@@ -87,7 +87,9 @@ helm upgrade leetcode1 leetcode-chart --namespace leetcode --debug --dry-run (sh
 helm history leetcode
 helm uninstall leetcode
 helm status leetcode
+helm show values prometheus-community/prometheus
 
+helm install my-app . --values values-prod.yaml -n keda --debug --dry-run >> output.txt
 
 Run below command from root of repository
 docker build -f apps/server/Dockerfile -t your-image-name .
