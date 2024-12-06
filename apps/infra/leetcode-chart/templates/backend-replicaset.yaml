@@ -1,3 +1,4 @@
+{{ if .Values.ignoreFiles }}
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
@@ -25,3 +26,4 @@ spec:
               value: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
             - name: DATABASE_URL
               value: "mongodb+srv://{{ .Values.database.username }}:{{ .Values.database.password }}@cluster0.vfrom.mongodb.net/leetcode"
+{{ end }}

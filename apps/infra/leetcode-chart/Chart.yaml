@@ -10,5 +10,5 @@ dependencies:
     version: 2.10.0      # Specify the KEDA chart version you want to use
     repository: https://kedacore.github.io/charts
   - name: prometheus
-    version: 3.0.0 # Specify the desired version
+    version: 26.0.0 # Specify the desired version
     repository: https://prometheus-community.github.io/helm-charts

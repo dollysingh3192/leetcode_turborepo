@@ -70,6 +70,8 @@ kubectl port-forward svc/backend-service 3000:3000 --namespace leetcode
 
 Port forwarding to rabbitmq service
 kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
+kubectl get service -n keda
+kubectl port-forward svc/my-app-prometheus-server 9090:80 -n keda
 then simply access rabbitmq management console at http://localhost:15672
 
 HELM Commands
@@ -128,6 +130,7 @@ kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
 kubectl get hpa -n leetcode
 kubectl get deployments -n leetcode
 kubectl get pods -n leetcode
+kubectl get service -n keda
 
 echo -n "amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672" | base64
 
