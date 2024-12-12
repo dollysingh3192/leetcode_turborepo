@@ -62,6 +62,8 @@ RUN npm run build
 
 FROM node:18-alpine
 
+RUN ln -s /usr/lib/libssl.so.3 /lib/libssl.so.3
+
 WORKDIR /app
 
 COPY --from=builder /app/packages /app/packages
@@ -71,6 +73,9 @@ COPY --from=builder /app/apps/server /app/apps/server
 
 # Copy node_modules to include local packages and dependencies
 COPY --from=builder /app/node_modules /app/node_modules
+
+# Merge node_modules: Copy prisma client to server
+COPY --from=builder /app/node_modules/.prisma /app/apps/server/node_modules/.prisma
 
 WORKDIR /app/apps/server
 

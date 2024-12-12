@@ -5,5 +5,11 @@ dependencies:
 - name: keda
   repository: https://kedacore.github.io/charts
   version: 2.10.0
-digest: sha256:a400095f623f89fbc1e45d69397a1799e9c223bc126bff5bd0391d13eac7363d
-generated: "2024-10-15T23:30:29.841908+05:30"
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 26.0.0
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 8.6.4
+digest: sha256:c749cc749724c222c6debecef4ebf305177158efdc4a6ee3cd7b479128ae154a
+generated: "2024-12-06T20:54:38.776179+05:30"

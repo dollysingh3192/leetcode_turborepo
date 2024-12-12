@@ -1,8 +1,7 @@
-{{ if .Values.ignoreFiles }}
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: backend-rs
+  name: backend-deployment
   namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
@@ -13,6 +12,11 @@ spec:
     metadata:
       labels:
         app: backend
+      annotations:
+        prometheus.io/scrape: "true"
+        #prometheus.io/path: /api/data/metrics //this was old
+        prometheus.io/path: /metrics
+        prometheus.io/port: {{ quote .Values.backend.port }}
     spec:
       containers:
         - name: backend
@@ -21,9 +25,6 @@ spec:
             - containerPort: {{ .Values.backend.port }}
           env:
             - name: RABBITMQ_URL
-              #amqp://myuser:mypassword@rabbitmq.default.svc.cluster.local:5672
-              #
               value: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Values.rabbitmq.fullnameOverride }}.{{ .Values.rabbitmq.namespaceOverride }}.svc.cluster.local:5672"
             - name: DATABASE_URL
               value: "mongodb+srv://{{ .Values.database.username }}:{{ .Values.database.password }}@cluster0.vfrom.mongodb.net/leetcode"
-{{ end }}

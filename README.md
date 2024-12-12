@@ -41,7 +41,7 @@ Clone the repository
 Note: In this application all resources are deployed in a namespace called leetcode
 
 Docker Commands
-
+docker build -f apps/worker/Dockerfile -t leetcode-turborepo/worker:v2 .
 docker tag leetcode/worker:latest dollysingh3192/leetcode-worker:v1
 docker push dollysingh3192/leetcode-worker:v1
 docker pull  dollysingh3192/leetcode-worker:v1
@@ -70,6 +70,8 @@ kubectl port-forward svc/backend-service 3000:3000 --namespace leetcode
 
 Port forwarding to rabbitmq service
 kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
+kubectl get service -n keda
+kubectl port-forward svc/my-app-prometheus-server 9090:80 -n keda
 then simply access rabbitmq management console at http://localhost:15672
 
 HELM Commands
@@ -87,7 +89,9 @@ helm upgrade leetcode1 leetcode-chart --namespace leetcode --debug --dry-run (sh
 helm history leetcode
 helm uninstall leetcode
 helm status leetcode
+helm show values prometheus-community/prometheus
 
+helm install my-app . --values values-prod.yaml -n keda --debug --dry-run >> output.txt
 
 Run below command from root of repository
 docker build -f apps/server/Dockerfile -t your-image-name .
@@ -110,6 +114,10 @@ rabbitmqctl list_queues
 rabbitmqctl list_connections
 rabbitmq-plugins list
 rabbitmq-plugins enable rabbitmq_management
+kubectl port-forward svc/grafana <desired_local_port>:<grafana_port>
+kubectl port-forward svc/my-app-grafana 3010:80 -n keda
+http://host.docker.internal:9090 in grafana to connect to the prometheus instance.
+kubectl get secret --namespace keda my-app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 kubectl port-forward svc/<rabbitmq-service-name> 15672:15672 -n <namespace>
 kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
 http://localhost:15672
@@ -126,6 +134,7 @@ kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
 kubectl get hpa -n leetcode
 kubectl get deployments -n leetcode
 kubectl get pods -n leetcode
+kubectl get service -n keda
 
 echo -n "amqp://myuser:mypassword@rabbitmq.leetcode.svc.cluster.local:5672" | base64
 

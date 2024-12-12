@@ -15,6 +15,10 @@ spec:
     metadata:
       labels:
         app: worker
+      # annotations:
+      #   prometheus.io/scrape: "true"
+      #   prometheus.io/path: /metrics
+      #   prometheus.io/port: "8080"
     spec:
       initContainers:
         - name: wait-for-rabbitmq
