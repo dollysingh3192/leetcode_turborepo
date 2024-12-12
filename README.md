@@ -41,7 +41,7 @@ Clone the repository
 Note: In this application all resources are deployed in a namespace called leetcode
 
 Docker Commands
-
+docker build -f apps/worker/Dockerfile -t leetcode-turborepo/worker:v2 .
 docker tag leetcode/worker:latest dollysingh3192/leetcode-worker:v1
 docker push dollysingh3192/leetcode-worker:v1
 docker pull  dollysingh3192/leetcode-worker:v1
@@ -114,6 +114,10 @@ rabbitmqctl list_queues
 rabbitmqctl list_connections
 rabbitmq-plugins list
 rabbitmq-plugins enable rabbitmq_management
+kubectl port-forward svc/grafana <desired_local_port>:<grafana_port>
+kubectl port-forward svc/my-app-grafana 3010:80 -n keda
+http://host.docker.internal:9090 in grafana to connect to the prometheus instance.
+kubectl get secret --namespace keda my-app-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 kubectl port-forward svc/<rabbitmq-service-name> 15672:15672 -n <namespace>
 kubectl port-forward svc/rabbitmq 15672:15672 -n leetcode
 http://localhost:15672

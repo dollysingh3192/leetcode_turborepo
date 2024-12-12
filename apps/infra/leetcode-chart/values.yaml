@@ -1,28 +1,43 @@
+keda:
+  watchNamespace: "leetcode"
+  namespace: keda
+
+prometheus:
+  namespace: "leetcode"
+  alertmanager:
+    enabled: false
+  nodeExporter:
+    enabled: true
+  pushgateway:
+    enabled: true
+  kubeStateMetrics:
+    enabled: true
 
 rabbitmq:
   fullnameOverride: "rabbitmq"
-  namespaceOverride: leetcode
+  namespaceOverride: "leetcode"
   auth:
-    username: myuser
-    password: mypassword
+    username: myuser1
+    password: mypassword1
     #openssl rand -base64 32
-    erlangCookie: 5e2cW7bCmoQEFGB1OojQjyTSqko8srW/pFmC0ofkXm4=
+    erlangCookie: 15e2cW7bCmoQEFGB1OojQjyTSqko8srW/pFmC0ofkXm4=
   replicas: 1
   service:
     type: ClusterIP
 
 backend:
-  image: dollysingh3192/leetcode-server:v1
+  image: dollysingh3192/leetcode-server:v7
   port: 3000
 
 worker:
-  image: dollysingh3192/leetcode-worker:v1
+  image: dollysingh3192/leetcode-worker:v5
   port: 3001
 
 database:
-  username: root
-  password: password
+  username: dummy
+  password: dummy
 
 namespace: leetcode
+releasename: leetcode
 
-ignoreFiles: false # Change this to true to create templates 
+ignoreFiles: false # Change this to true to create templates
